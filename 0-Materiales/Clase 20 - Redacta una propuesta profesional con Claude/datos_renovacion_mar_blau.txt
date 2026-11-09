@@ -1,0 +1,30 @@
+DATOS PARA LA PROPUESTA DE RENOVACIÓN
+(Úsalos para responder a las preguntas de Claude. No hace falta pegarlos de golpe.)
+
+QUIÉN SOY
+- Estudio Onda: diseño web y mantenimiento para hoteles. Somos 5 personas. Yo llevo la relación con los clientes.
+
+EL CLIENTE
+- Hoteles Mar Blau: 3 hoteles en la costa (Mar Blau Platja, Mar Blau Port y Mar Blau Cala).
+- Contacto habitual: Elena Serra, directora de marketing. Está contenta con nuestro trabajo.
+- Novedad: desde septiembre hay un nuevo director financiero, Jordi Vidal. Ha pedido a todos los proveedores recortar un 10 % para 2027.
+- La propuesta debe estar enviada antes del 30 de noviembre. El contrato actual termina el 31 de diciembre.
+
+EL CONTRATO DE 2026
+- Mantenimiento web de los 3 hoteles: 690 € al mes (8.280 € al año).
+- Incluye: actualizaciones, copias de seguridad, cambios de contenido (hasta 6 horas al mes) y soporte en horario laboral.
+- No incluye: hosting (lo contrata el cliente con otro proveedor) ni soporte en fin de semana.
+
+RESULTADOS DE 2026
+- 41 incidencias resueltas. Tiempo medio de resolución: 3,2 horas.
+- Disponibilidad de las webs: 99,6 %.
+- En marzo rediseñamos el motor de reservas: las reservas directas por la web han subido un 18 % respecto a 2025.
+- Problema: el 14 de agosto, en plena temporada alta, las webs estuvieron caídas 6 horas por un fallo del proveedor de hosting del cliente. Era sábado y no teníamos soporte de fin de semana: lo resolvimos el domingo por la mañana.
+
+LO QUE QUIERO PROPONER PARA 2027
+- Opción 1 · Completa: 770 € al mes. Mantenimiento actual + hosting gestionado por nosotros + monitorización 24/7 + soporte en fin de semana para caídas.
+- Opción 2 · Básica: 720 € al mes. Mantenimiento actual + monitorización 24/7 (avisos de caída), sin hosting ni soporte de fin de semana.
+- Objetivo: que elijan la opción 1. Evitaría otra caída como la de agosto.
+
+LO QUE SÉ DE LA COMPETENCIA
+- Otra agencia les ha ofrecido 590 € al mes, sin soporte de fin de semana y sin experiencia en motores de reservas.

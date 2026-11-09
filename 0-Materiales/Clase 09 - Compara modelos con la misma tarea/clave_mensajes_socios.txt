@@ -1,0 +1,25 @@
+CLAVE DE CORRECCIÓN · MENSAJES DE SOCIOS
+(Para comprobar el resultado. No la subas a la conversación.)
+
+M01 altas y bajas
+M02 información      (también aceptable: reservas)
+M03 facturación
+M04 quejas
+M05 información
+M06 altas y bajas
+M07 reservas
+M08 facturación
+M09 quejas
+M10 información
+M11 altas y bajas
+M12 reservas         (también aceptable: quejas)
+M13 información      (también aceptable: facturación)
+M14 quejas
+M15 reservas
+M16 facturación      (también aceptable: quejas)
+M17 altas y bajas
+M18 información
+M19 quejas
+M20 facturación
+
+Criterio de éxito fijado antes de probar: al menos 18 de 20 aciertos y el formato pedido (tabla id | categoría).

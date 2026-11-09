@@ -1,0 +1,95 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Curso Introduccion a Claude//Bruma Eventos//ES
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Bruma Eventos (demo)
+X-WR-TIMEZONE:Europe/Madrid
+BEGIN:VEVENT
+UID:bruma-demo-1@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261116T093000
+DTEND;TZID=Europe/Madrid:20261116T100000
+SUMMARY:Reunión de equipo semanal
+LOCATION:Oficina
+END:VEVENT
+BEGIN:VEVENT
+UID:bruma-demo-2@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261116T120000
+DTEND;TZID=Europe/Madrid:20261116T130000
+SUMMARY:Llamada con Hotel Alcázar (boda Ruiz-Ortega)
+LOCATION:Teléfono
+END:VEVENT
+BEGIN:VEVENT
+UID:bruma-demo-3@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261116T160000
+DTEND;TZID=Europe/Madrid:20261116T170000
+SUMMARY:Visita a la finca Los Olivos
+LOCATION:Finca Los Olivos
+END:VEVENT
+BEGIN:VEVENT
+UID:bruma-demo-4@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261117T100000
+DTEND;TZID=Europe/Madrid:20261117T113000
+SUMMARY:Presentación de la propuesta del Congreso Farmacéutico
+LOCATION:Oficina del cliente
+END:VEVENT
+BEGIN:VEVENT
+UID:bruma-demo-5@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261117T133000
+DTEND;TZID=Europe/Madrid:20261117T143000
+SUMMARY:Comida con Catering Sabores
+LOCATION:Restaurante Casa Pepa
+END:VEVENT
+BEGIN:VEVENT
+UID:bruma-demo-6@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261118T090000
+DTEND;TZID=Europe/Madrid:20261118T130000
+SUMMARY:Montaje de la gala de la Fundación Mar (fuera de la oficina)
+LOCATION:Palacio de Congresos
+END:VEVENT
+BEGIN:VEVENT
+UID:bruma-demo-7@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261118T170000
+DTEND;TZID=Europe/Madrid:20261118T173000
+SUMMARY:Revisión del presupuesto de la boda Ruiz-Ortega
+LOCATION:Oficina
+END:VEVENT
+BEGIN:VEVENT
+UID:bruma-demo-8@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261119T110000
+DTEND;TZID=Europe/Madrid:20261119T120000
+SUMMARY:Reunión con Tecnova: lanzamiento de producto
+LOCATION:Videollamada
+END:VEVENT
+BEGIN:VEVENT
+UID:bruma-demo-9@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261119T113000
+DTEND;TZID=Europe/Madrid:20261119T123000
+SUMMARY:Reunión con la agencia audiovisual
+LOCATION:Oficina
+END:VEVENT
+BEGIN:VEVENT
+UID:bruma-demo-10@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261119T160000
+DTEND;TZID=Europe/Madrid:20261119T180000
+SUMMARY:Preparar dossier Tecnova
+LOCATION:Oficina
+END:VEVENT
+BEGIN:VEVENT
+UID:bruma-demo-11@curso-claude.example
+DTSTAMP:20261109T090000Z
+DTSTART;TZID=Europe/Madrid:20261120T100000
+DTEND;TZID=Europe/Madrid:20261120T110000
+SUMMARY:Cierre semanal con dirección
+LOCATION:Oficina
+END:VEVENT
+END:VCALENDAR

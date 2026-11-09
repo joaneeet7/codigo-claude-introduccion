@@ -1,0 +1,14 @@
+SEIS SITUACIONES PARA REVISAR
+Para cada una: ¿qué harías?, ¿qué riesgo hay? y ¿cómo lo harías bien?
+
+1. Para segmentar una campaña, quieres pegar en Claude el listado completo de clientes con nombre, correo y teléfono.
+
+2. Tienes 40 candidaturas para un puesto y quieres que Claude te diga a cuáles descartar directamente.
+
+3. Claude te ha escrito un eslogan para tu tienda que se parece mucho al de una marca conocida. Te gusta y quieres publicarlo mañana.
+
+4. Un cliente te ha enviado un contrato confidencial. Lo quieres resumir con tu cuenta personal gratuita, porque en tu empresa no hay plan de Claude.
+
+5. Le has pedido a Claude su opinión sobre tu plan de negocio. Te ha dicho que es muy prometedor y estás a punto de presentarlo al banco.
+
+6. Has subido el informe médico de un familiar y Claude te ha explicado las opciones de tratamiento. Quieres decidir cuál elegir con esa explicación.

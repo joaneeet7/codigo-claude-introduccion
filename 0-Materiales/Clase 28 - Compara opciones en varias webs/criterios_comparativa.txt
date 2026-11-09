@@ -1,0 +1,15 @@
+CRITERIOS PARA LA COMPARATIVA
+(Lo que necesita el equipo antes de elegir herramienta de gestión de proyectos.)
+
+- Equipo de 8 personas.
+- Facturación anual (pagamos una vez al año).
+- Imprescindible: vista de calendario y tareas con fecha límite.
+- Deseable: app para el móvil y plantillas de proyecto.
+- Presupuesto orientativo: hasta 1.000 € al año para todo el equipo.
+
+Para cada herramienta queremos saber:
+- El plan más barato que cumple lo imprescindible.
+- El precio total al año para 8 personas (no por usuario).
+- Límites importantes del plan (usuarios mínimos, proyectos, almacenamiento).
+- Si hay prueba gratuita y cuántos días dura.
+- La dirección de la página de donde sale cada dato.
