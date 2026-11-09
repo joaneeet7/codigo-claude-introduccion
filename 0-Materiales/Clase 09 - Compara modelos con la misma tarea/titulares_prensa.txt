@@ -1,0 +1,20 @@
+T01. Cafés Brío abre su local número 14 con lista de espera el primer día
+T02. Quejas en redes por la subida de precios en Cafés Brío
+T03. Cafés Brío, premiada por su café de origen único
+T04. Los baristas de Cafés Brío denuncian turnos excesivos
+T05. Cafés Brío firma con productores de Colombia a precio justo
+T06. Cafés Brío cierra temporalmente un local por obras
+T07. La app de fidelización de Cafés Brío supera las 20.000 descargas
+T08. Inspección sanitaria sin incidencias en los locales de Cafés Brío
+T09. Cafés Brío retira un lote de café por un error de etiquetado
+T10. Cafés Brío, entre las 10 mejores cafeterías según una guía gastronómica
+T11. Clientes critican las colas en el local de la estación
+T12. Cafés Brío lanza un menú vegano con buena acogida
+T13. Cafés Brío anuncia su entrada en la venta online de café en grano
+T14. Un estudio sitúa a Cafés Brío como la cadena más cara del sector
+T15. Cafés Brío dona su excedente diario a comedores sociales
+T16. Retrasos en la apertura del local 15 por licencias
+T17. Cafés Brío incorpora vasos reutilizables en todos sus locales
+T18. Usuarios reportan fallos en los pagos de la app de Cafés Brío
+T19. Cafés Brío patrocina el campeonato regional de baristas
+T20. Cafés Brío mantiene precios pese a la subida del café verde

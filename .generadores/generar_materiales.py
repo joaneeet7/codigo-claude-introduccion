@@ -1,7 +1,9 @@
 """Genera '0-Materiales/' del curso Introducción a Claude.
 
 Uso: python3 -I .generadores/generar_materiales.py   (macOS, usa Google Chrome headless)
-Todos los datos son ficticios. El script es determinista: las cifras de control
+Todos los datos son ficticios. Los materiales de las Clases 09 y 24, y los CV de la
+Clase 37, se reutilizan del curso Claude Associate Foundations: están copiados tal
+cual en 0-Materiales y este script no los toca. El script es determinista: las cifras de control
 que imprime al final son las que aparecen en los enunciados (no las cambies sin
 actualizar también generar_enunciados.py).
 """
@@ -18,7 +20,7 @@ from comun import MATERIALES, carpeta, html_a_pdf  # noqa: E402
 from materiales_texto import TEXTOS  # noqa: E402
 
 import docx  # noqa: E402
-from docx.shared import Pt, RGBColor  # noqa: E402
+from docx.shared import Pt  # noqa: E402
 from openpyxl import Workbook  # noqa: E402
 from openpyxl.styles import Alignment, Font, PatternFill  # noqa: E402
 from openpyxl.utils import get_column_letter  # noqa: E402
@@ -287,80 +289,6 @@ def plantilla_verificacion():
     wb.save(ruta(18, "plantilla_verificacion_fuentes.xlsx"))
 
 
-# ------------------------------------------------------------------ Clase 24
-def documento(path, titulo, bloques):
-    d = docx.Document()
-    st = d.styles["Normal"]
-    st.font.name = "Calibri"
-    st.font.size = Pt(11)
-    h = d.add_heading(titulo, level=1)
-    for r in h.runs:
-        r.font.color.rgb = RGBColor(0x1F, 0x4E, 0x5F)
-    for b in bloques:
-        if isinstance(b, tuple) and b[0] == "h":
-            d.add_heading(b[1], level=2)
-        elif isinstance(b, tuple) and b[0] == "tabla":
-            t = d.add_table(rows=0, cols=len(b[1][0]))
-            t.style = "Light Grid Accent 1"
-            for fila in b[1]:
-                cells = t.add_row().cells
-                for c, v in zip(cells, fila):
-                    c.text = v
-        elif isinstance(b, list):
-            for x in b:
-                d.add_paragraph(x, style="List Bullet")
-        else:
-            d.add_paragraph(b)
-    d.save(path)
-
-
-def autoescuela():
-    documento(ruta(24, "Tarifas_y_condiciones_sept2026.docx"), "Autoescuela Ronda · Tarifas y condiciones", [
-        "Vigentes desde el 1 de septiembre de 2026. Sustituyen a todas las tarifas anteriores.",
-        ("h", "1. Permiso B (coche)"),
-        ("tabla", [["Concepto", "Precio"], ["Matrícula (incluye curso teórico y material)", "180 €"],
-                   ["Clase práctica de 45 minutos", "38 €"], ["Pack de 10 clases prácticas", "350 €"],
-                   ["Pack de 20 clases prácticas", "660 €"], ["Acompañamiento al examen práctico", "60 €"]]),
-        "Las tasas de Tráfico no están incluidas: las fija la DGT y se pagan aparte.",
-        ("h", "2. Cancelaciones"),
-        "Las clases prácticas se pueden cancelar o cambiar sin coste avisando con al menos 48 horas de antelación. "
-        "Si se avisa con menos de 48 horas, la clase se cobra completa, salvo causa justificada con documento (por ejemplo, un justificante médico).",
-        ("h", "3. Formas de pago"),
-        ["Tarjeta o Bizum en la oficina.", "Transferencia bancaria (indicando nombre y DNI del alumno).",
-         "Los packs se pueden pagar en dos plazos: 50 % al contratarlos y 50 % al llegar a la mitad de las clases."],
-        ("h", "4. Validez de los packs"),
-        "Los packs de clases caducan a los 12 meses desde la compra. Las clases no usadas no se devuelven.",
-    ])
-    documento(ruta(24, "Tarifas_y_condiciones.docx"), "Autoescuela Ronda · Tarifas y condiciones", [
-        ("h", "1. Permiso B (coche)"),
-        ("tabla", [["Concepto", "Precio"], ["Matrícula (incluye curso teórico y material)", "150 €"],
-                   ["Clase práctica de 45 minutos", "34 €"], ["Pack de 10 clases prácticas", "320 €"],
-                   ["Pack de 20 clases prácticas", "600 €"], ["Acompañamiento al examen práctico", "50 €"]]),
-        "Las tasas de Tráfico no están incluidas.",
-        ("h", "2. Cancelaciones"),
-        "Las clases prácticas se pueden cancelar sin coste avisando con 24 horas de antelación. Si no, se cobra la clase.",
-        ("h", "3. Formas de pago"),
-        ["Tarjeta o efectivo en la oficina.", "Transferencia bancaria."],
-        ("h", "4. Validez de los packs"),
-        "Los packs de clases no caducan.",
-    ])
-    documento(ruta(24, "Preguntas_frecuentes.docx"), "Autoescuela Ronda · Preguntas frecuentes", [
-        ("h", "¿Cuándo es el horario de oficina?"),
-        "De lunes a viernes, de 9:30 a 13:30 y de 16:30 a 20:00. Los sábados, de 10:00 a 13:00.",
-        ("h", "¿Cuándo me puedo examinar del teórico?"),
-        "Cuando el profesor de teórico confirme que apruebas los test de prueba con un máximo de 2 fallos. "
-        "La fecha la asigna la DGT; la autoescuela solo presenta la solicitud.",
-        ("h", "¿Cuántas clases prácticas necesitaré?"),
-        "Depende de cada persona. La media de nuestros alumnos es de 22 clases. El profesor te dirá cuándo estás preparado para el examen.",
-        ("h", "¿Puedo empezar las prácticas antes de aprobar el teórico?"),
-        "Sí, desde que tienes la matrícula hecha y el permiso de aprendizaje en trámite.",
-        ("h", "¿Dónde empiezan las clases prácticas?"),
-        "En la puerta de la oficina (avenida de la Constitución, 41) o en la estación de metro Ronda Sur, a elegir al reservar.",
-        ("h", "¿Hacéis precio para estudiantes?"),
-        "No tenemos descuentos por ser estudiante. Sí hay un 5 % de descuento si dos hermanos se matriculan a la vez.",
-    ])
-
-
 # ------------------------------------------------------------------ Clase 26
 def agenda_bruma():
     ev = [
@@ -574,7 +502,6 @@ def main():
     gastos_lumbre()
     ticket_restaurante()
     plantilla_verificacion()
-    autoescuela()
     agenda_bruma()
     ventas_rueda_libre()
     facturas_arcilla()

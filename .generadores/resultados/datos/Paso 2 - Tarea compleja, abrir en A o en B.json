@@ -1,0 +1,76 @@
+{
+ "etiqueta": "Compara modelos · Paso 2",
+ "titulo": "Tarea compleja: abrir en A o en B",
+ "contexto": "Mismo prompt y mismos datos con Haiku, Sonnet y Opus.",
+ "prompt": "Con los datos de expansión adjuntos, recomienda si Cafés Brío debe abrir en la ciudad A o en la B el próximo año. Razona paso a paso considerando las restricciones antes de concluir. Indica los supuestos que haces y qué dato cambiaría tu recomendación.",
+ "etiqueta_metricas": "Recomendación",
+ "metricas": [
+  {
+   "valor": "B",
+   "etiqueta": "Haiku"
+  },
+  {
+   "valor": "A",
+   "etiqueta": "Sonnet"
+  },
+  {
+   "valor": "B",
+   "etiqueta": "Opus"
+  },
+  {
+   "valor": "3/3",
+   "etiqueta": "piden el coste de apertura"
+  }
+ ],
+ "extractos": [
+  "Haiku: «Si el costo de apertura en A es 45.000 € menos…» (el ahorro calculado era de 27.000 €)",
+  "Opus: «¿Los 220.000 € son para abrir un solo local o los 3 nuevos en la ciudad elegida?»"
+ ],
+ "tabla": {
+  "titulo": "Mismos datos, tres razonamientos",
+  "columnas": [
+   "Qué mirar",
+   "Haiku",
+   "Sonnet",
+   "Opus"
+  ],
+  "filas": [
+   [
+    "Cálculos",
+    "✕ 45.000 € no cuadra",
+    "~ Ingreso, no margen",
+    "✓ Avisa: solo ingreso"
+   ],
+   [
+    "Marca desconocida en B",
+    "✕ No la menciona",
+    "✓ La pesa",
+    "✓ Plan de lanzamiento"
+   ],
+   [
+    "Polígono a 10 min",
+    "~ Lo da por cubierto",
+    "✓ Lo cuestiona",
+    "✓ Supuesto explícito"
+   ],
+   [
+    "Uso del brief",
+    "✕ Lo liga a la venta online",
+    "~ Perfil de cliente",
+    "✓ Objetivos del año"
+   ],
+   [
+    "Pregunta clave",
+    "~ Costes",
+    "✓ Punto de equilibrio",
+    "✓ ¿1 local o 3?"
+   ]
+  ]
+ },
+ "conclusiones": [
+  "Con los mismos datos, **A y B son defendibles**: Sonnet elige A y Opus elige B, y los dos razonan bien. Es una decisión de criterio, no de cálculo.",
+  "El modelo ligero **se queda corto**: un cálculo que no cuadra, un riesgo omitido y una conexión inventada. Aquí sí compensa subir de modelo.",
+  "La diferencia está en la **profundidad de los supuestos**, no en el veredicto. Y los tres piden el dato que decide: el coste de abrir."
+ ],
+ "frase_clave": "Un modelo más potente no decide por ti: *te da mejores argumentos*."
+}

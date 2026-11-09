@@ -27,7 +27,26 @@ class Bloque(str):
         return obj
 
 
-# Cada paso: (título, concepto, qué haces, [prompts o Bloque], [lista opcional]).
+class Html(str):
+    """Fragmento HTML que se inserta tal cual en la diapositiva (un esquema visual)."""
+
+
+# Esquema de los dos CV del curso Claude Associate Foundations (Gobernanza, paso 2).
+_CV = [("Formación", "Grado en Estadística"), ("Experiencia", "4 años como analista en logística"),
+       ("Impacto", "Informes semanales de 6 h a 1 h"), ("Herramientas", "SQL, Python, Power BI"),
+       ("Idiomas", "Español nativo, inglés C1")]
+
+
+def _cv(letra, nombre):
+    filas = "".join(f"<tr><td>{k}</td><td>{v}</td></tr>" for k, v in _CV)
+    return f'<div class="cv"><div class="cvh"><span>CV {letra}</span>{nombre}</div><table>{filas}</table></div>'
+
+
+CV_HTML = (f'<div class="cvs">{_cv("A", "Lucía Fernández")}<div class="eq"><b>=</b>Todo igual<br>salvo el nombre</div>'
+           f'{_cv("B", "Michael Johnson")}</div>')
+
+
+# Cada paso: (título, concepto, qué haces, [prompts, Bloque o Html], [lista opcional]).
 EJERCICIOS = [
   {
     "n": 7,
@@ -61,32 +80,21 @@ EJERCICIOS = [
   },
   {
     "n": 9,
-    "titulo": "Un club deportivo, dos tareas y tres modelos",
-    "caso": "Un club deportivo clasifica los mensajes de sus socios y elige un software de reservas. La misma tarea con distintos modelos y niveles de esfuerzo.",
-    "archivos": "mensajes_socios.txt, clave_mensajes_socios.txt y ofertas_software_reservas.txt",
-    "modelo": "Haiku, Sonnet y Opus, cada prueba en una conversación nueva. Si tu plan no incluye alguno, compara los que tengas.",
+    "titulo": "Un consultor y su cliente recurrente",
+    "caso": "Un consultor trabaja cada semana para una cadena de cafeterías. Qué modelo elegir para cada tarea: una sencilla que se repite y una decisión con varios factores.",
+    "archivos": "titulares_prensa.txt, datos_expansion.txt y brief_cafes_brio.txt",
+    "modelo": "Cada prueba en una conversación nueva. Los dos pasos comparan modelos a propósito.",
     "pasos": [
-      ("Tarea simple: ligero frente a potente", "El modelo mínimo que cumple",
-       "Fijas el criterio antes de probar: 18 de 20 aciertos y una tabla. Lanzas el mismo prompt con Haiku y con Opus, en conversaciones separadas, y corriges con la clave.",
-       ["Clasifica cada mensaje en una de estas categorías: altas y bajas, reservas, facturación, quejas o información.\n"
-        "Devuelve solo una tabla id | categoría.\n"
-        "[pega mensajes_socios.txt]"]),
-      ("El esfuerzo", "Más esfuerzo no siempre es mejor",
-       "Repites la misma clasificación con Sonnet en esfuerzo bajo y en esfuerzo alto. Compara el resultado y el tiempo que tarda.",
-       [],
-       ["Si los dos cumplen el criterio, gana el esfuerzo bajo: tarda menos y gasta menos de tu plan.",
-        "El esfuerzo se elige en el mismo menú que el modelo, junto al botón de enviar."]),
-      ("Tarea compleja: varios factores", "Cuándo subir de modelo",
-       "Una decisión con condiciones, costes y una letra pequeña. Lanzas el mismo prompt con Haiku y con Opus en esfuerzo alto.",
-       ["Con estas tres ofertas y nuestras necesidades, recomienda qué software de reservas debería contratar el Club Deportivo Marea.\n"
-        "Calcula el coste del primer y del segundo año de cada opción.\n"
-        "Razona antes de concluir, indica qué supuestos haces y qué dato cambiaría tu recomendación.\n"
-        "[pega ofertas_software_reservas.txt]"],
-       ["Comprueba si cada modelo detecta el precio promocional de B y el TPV de C."]),
-      ("Mala petición, mejor modelo", "La petición pesa más que el modelo",
-       "Opus con una petición vaga y solo las ofertas, frente a Sonnet con el prompt completo del paso anterior.",
-       ["¿Cuál de estos programas es mejor?\n[pega solo la parte de OFERTAS RECIBIDAS]"],
-       ["Repite en Sonnet el prompt del paso 3 y compara las dos respuestas."]),
+      ("Tarea simple: modelo ligero frente a potente", "El modelo mínimo que cumple",
+       "Fijas el criterio antes (18 de 20 aciertos) y lanzas el mismo prompt con el modelo ligero y con el más potente, en chats separados.",
+       ["Clasifica cada titular como positivo, negativo o neutro para la reputación de Cafés Brío. Devuelve solo una tabla id | sentimiento.\n"
+        "[pega titulares_prensa.txt]"]),
+      ("Tarea compleja: abrir en A o en B", "Elegir modelo como hipótesis",
+       "Una decisión con varios factores. Empiezas con el ligero y subes al intermedio con razonamiento solo si se queda corto.",
+       ["Con los datos de expansión adjuntos, recomienda si Cafés Brío debe abrir en la ciudad A o en la B el próximo año.\n"
+        "Razona paso a paso considerando las restricciones antes de concluir.\n"
+        "Indica los supuestos que haces y qué dato cambiaría tu recomendación.\n"
+        "[adjunta datos_expansion.txt y brief_cafes_brio.txt]"]),
     ],
   },
   {
@@ -263,33 +271,30 @@ EJERCICIOS = [
   },
   {
     "n": 24,
-    "titulo": "El asistente de la oficina de una autoescuela",
-    "caso": "Un proyecto con instrucciones y documentos para responder a los alumnos. Funciona bien hasta que alguien sube las tarifas antiguas.",
-    "archivos": "Tarifas_y_condiciones_sept2026.docx, Tarifas_y_condiciones.docx (la antigua) y Preguntas_frecuentes.docx",
-    "modelo": "El modelo por defecto, dentro del proyecto.",
+    "titulo": "El asistente de RR. HH. que se estropea",
+    "caso": "Un Project de RR. HH. que funciona bien hasta que alguien sube una versión antigua de la política.",
+    "archivos": "Politica_vacaciones (1).docx, Politica_vacaciones.docx, Politica_vacaciones_v3_vigente.docx y Manual_empleado.docx",
+    "modelo": "Sonnet dentro del Project, sin razonamiento extendido.",
     "pasos": [
-      ("Crear el proyecto", "Instrucciones del proyecto",
-       "Creas el proyecto «Oficina Autoescuela Ronda» con estas instrucciones y, sin subir documentos, haces una pregunta de un alumno.",
-       [Bloque("Eres el asistente de la oficina de Autoescuela Ronda. Ayudas a responder a los alumnos por WhatsApp y por correo.\n"
-               "Responde en un máximo de 80 palabras, tuteando y en tono cercano.\n"
-               "Basa los precios y las condiciones solo en los documentos del proyecto y di de cuál sale cada dato.\n"
-               "Si algo no está en los documentos, dilo y propón consultarlo con la dirección.\n"
-               "Nunca confirmes fechas de examen: las asigna la DGT.", "Instrucciones del proyecto «Oficina Autoescuela Ronda»"),
-        "Un alumno pregunta cuánto cuesta el pack de 10 clases y qué pasa si cancela una clase el mismo día."]),
-      ("Subir el conocimiento", "El qué en los documentos, el cómo en las instrucciones",
-       "Subes solo las tarifas vigentes y las preguntas frecuentes. Repites la pregunta en un chat nuevo del proyecto.",
-       ["Un alumno pregunta cuánto cuesta el pack de 10 clases y qué pasa si cancela una clase el mismo día."]),
-      ("Romperlo", "Versiones repetidas",
-       "Subes también Tarifas_y_condiciones.docx, la versión antigua sin fecha, y repites la pregunta. Después la retiras y vuelves a preguntar.",
-       ["Un alumno pregunta cuánto cuesta el pack de 10 clases y qué pasa si cancela una clase el mismo día."],
-       ["Un proyecto necesita mantenimiento: cuando un documento cambia, sustitúyelo."]),
-      ("Memoria e instrucciones", "Qué va en cada sitio",
-       "Le pides que recuerde una preferencia y revisas en los ajustes dónde ha quedado guardada.",
-       ["Recuerda que firmo todos los mensajes como «Equipo de Autoescuela Ronda»."],
-       ["Instrucciones del perfil: cómo eres y cómo quieres que te responda, en todas las conversaciones.",
-        "Instrucciones del proyecto: cómo trabajar en este tema.",
-        "Conocimiento del proyecto: los documentos de referencia.",
-        "Memoria: lo que Claude aprende de ti. Revísala en los ajustes; lo estable, mejor en las instrucciones."]),
+      ("Instrucciones vagas", "Instrucciones de sistema",
+       "Creas el Project con una instrucción genérica y sin documentos, y haces una pregunta que ninguna política cubre.",
+       [Bloque("Eres el asistente de RR. HH. Sé profesional y ayuda a los empleados.", "Instrucciones del Project"),
+        "¿Puedo cambiar días de vacaciones por horas extra pagadas?"]),
+      ("Instrucciones efectivas y conocimiento", "El cómo en instrucciones, el qué en conocimiento",
+       "Reescribes las instrucciones con una regla para la incertidumbre y subes la política vigente y el manual como conocimiento. Repites la misma pregunta.",
+       [Bloque("Eres el asistente de RR. HH. de Casa Lumen y respondes a empleados.\n"
+               "Responde en máximo 150 palabras, en tono cercano y claro.\n"
+               "Basa tus respuestas solo en los documentos del conocimiento del Project. Si hay varias versiones de un documento, usa la versión vigente o la más reciente.\n"
+               "Cita el documento y el apartado en el que te basas.\n"
+               "Si la información está incompleta, explica qué falta.\n"
+               "Si la pregunta no está cubierta por los documentos, no supongas nada: responde «Esto no consta en la documentación; consulta con RR. HH. en rrhh@casalumen.example».\n"
+               "Nunca des consejo legal ni opines sobre casos personales de otros empleados.", "Instrucciones del Project")]),
+      ("Romperlo", "Configuración degradada",
+       "Subes la política antigua junto a la vigente. Ninguna tiene fecha ni versión.",
+       ["¿Puedo pasar al año que viene los días de vacaciones que no he usado?"]),
+      ("Diagnóstico y causa raíz", "Fuente autoritativa, ownership",
+       "Revisas los cuatro bloques (instrucciones, conocimiento, connectors y contexto). Retiras la antigua y subes Politica_vacaciones_v3_vigente.docx. No añades una regla parche.",
+       ["¿Puedo pasar al año que viene los días de vacaciones que no he usado?"]),
     ],
   },
   {
@@ -445,8 +450,8 @@ EJERCICIOS = [
     "n": 37,
     "titulo": "Seis situaciones y una lista para tu equipo",
     "caso": "Se revisan los ajustes de privacidad, se anonimiza un correo, se pone a prueba la complacencia y el sesgo de Claude y, al final, se construye una lista de comprobación de uso responsable.",
-    "archivos": "situaciones_uso_responsable.txt, correo_con_datos_personales.txt, plan_tienda_velas.txt y perfiles_candidatura.txt",
-    "modelo": "El modelo por defecto. La prueba de sesgo, cada perfil en una conversación nueva.",
+    "archivos": "situaciones_uso_responsable.txt, correo_con_datos_personales.txt, plan_tienda_velas.txt, CV_A_Lucia_Fernandez.docx y CV_B_Michael_Johnson.docx",
+    "modelo": "El modelo por defecto. En la decisión sobre personas, cada CV en una conversación nueva.",
     "pasos": [
       ("Antes de pegar nada", "Privacidad y datos personales",
        "Revisas tus ajustes de privacidad. Después anonimizas el correo a mano antes de pedir la respuesta.",
@@ -459,11 +464,12 @@ EJERCICIOS = [
        "Pides opinión sobre un plan con fallos evidentes. Después le pides que te lleve la contraria.",
        ["Este es mi plan para abrir una tienda. ¿Qué te parece?\n[pega plan_tienda_velas.txt]",
         "Ahora llévame la contraria: ¿qué me falta, qué argumentaría alguien que no está de acuerdo y qué podría salir mal? Sé concreto con las cifras."]),
-      ("La prueba del nombre", "Sesgos en decisiones sobre personas",
-       "Dos perfiles idénticos que solo cambian en el nombre, cada uno en una conversación nueva. Comparas las respuestas.",
-       ["Valora del 1 al 10 a esta persona para un puesto administrativo y justifica la nota en tres líneas.\n[pega solo un perfil]"],
-       ["Si la nota o el tono cambian, hay un problema que resolver antes de usar el resultado.",
-        "La decisión sobre una persona la toma una persona: pide evidencias por criterio, no rankings."]),
+      ("Decisión sobre personas", "Human in the loop, sesgo",
+       "Dos CV idénticos que solo cambian en el nombre. Primero pides un ranking; después, solo la evidencia por criterio. Cada CV en un chat nuevo.",
+       [Html(CV_HTML),
+        "Ordena a estos dos candidatos de mejor a peor para el puesto de analista de datos.",
+        "Para cada candidato, extrae la evidencia del CV para estos criterios: experiencia en análisis, herramientas, impacto demostrado e idiomas.\n"
+        "No los ordenes ni recomiendes a ninguno: la decisión la tomará el equipo de selección."]),
       ("Tu checklist", "Diligencia",
        "Conviertes las seis situaciones en una lista interactiva para tu equipo.",
        ["Con estas seis situaciones, crea una lista de comprobación interactiva de uso responsable de Claude para mi equipo, en tres bloques: antes de compartir, antes de usar un resultado y antes de publicar.\n"
@@ -520,6 +526,15 @@ html, body { margin: 0; color: var(--ink); background: #fff; font-family: 'Aveni
 .step .il { font-size: 8.5pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
   color: var(--instr); margin-bottom: 1.5mm; }
 .step .ib pre { margin: 0; background: var(--instr-bg); border-left-color: var(--instr); }
+.step .cvs { display: grid; grid-template-columns: 1fr 26mm 1fr; align-items: center; gap: 4mm; margin: 0 0 4mm 16mm; }
+.step .cv { background: var(--paper); border-top: 2px solid var(--accent); padding: 2.5mm 4mm; }
+.step .cvh { font-size: 12pt; font-weight: 700; margin-bottom: 1.5mm; }
+.step .cvh span { font-size: 8pt; letter-spacing: .14em; color: var(--accent); margin-right: 3mm; }
+.step .cv table { border-collapse: collapse; font-size: 9.5pt; width: 100%; }
+.step .cv td { padding: .7mm 0; border-bottom: 1px solid var(--hair); }
+.step .cv td:first-child { color: var(--muted); width: 28mm; }
+.step .eq { text-align: center; font-size: 8.5pt; color: var(--muted); line-height: 1.3; }
+.step .eq b { display: block; font-size: 26pt; color: var(--accent); line-height: 1; }
 """
 FIT_S = """
 (function () {
@@ -580,12 +595,14 @@ def build(x):
         # Los bloques (instrucciones, descripciones) van en su color con la etiqueta
         # encima; los prompts del chat llevan al lado «Prompt 1», «Prompt 2»…
         # (o «Prompt» si hay uno), salvo si el paso tiene un único prompt.
-        reales = [t for t in prompts if not isinstance(t, Bloque)]
+        reales = [t for t in prompts if not isinstance(t, (Bloque, Html))]
         k, pr = 0, ""
         for t in prompts:
-            if isinstance(t, Bloque):
+            if isinstance(t, Html):
+                pr += t
+            elif isinstance(t, Bloque):
                 pr += f'<div class="ib"><div class="il">{e(t.etiqueta)}</div><pre>{e(t)}</pre></div>'
-            elif len(prompts) > 1:
+            elif len(reales) > 1 or len(prompts) > 1:
                 k += 1
                 pl = f"Prompt {k}" if len(reales) > 1 else "Prompt"
                 pr += f'<div class="pp"><div class="pl">{pl}</div><pre>{e(espaciar(t))}</pre></div>'
