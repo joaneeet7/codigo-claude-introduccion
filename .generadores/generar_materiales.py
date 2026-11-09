@@ -1,8 +1,9 @@
 """Genera '0-Materiales/' del curso Introducción a Claude.
 
 Uso: python3 -I .generadores/generar_materiales.py   (macOS, usa Google Chrome headless)
-Todos los datos son ficticios. Los materiales de las Clases 09 y 24, y los CV de la
-Clase 37, se reutilizan del curso Claude Associate Foundations: están copiados tal
+Todos los datos son ficticios. Los materiales de «Compara modelos con la misma
+tarea» y «Monta un proyecto para tu día a día», y los CV de «Tu checklist de uso
+responsable», se reutilizan del curso Claude Associate Foundations: están copiados tal
 cual en 0-Materiales y este script no los toca. El script es determinista: las cifras de control
 que imprime al final son las que aparecen en los enunciados (no las cambies sin
 actualizar también generar_enunciados.py).
@@ -16,7 +17,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from comun import MATERIALES, carpeta, html_a_pdf  # noqa: E402
+from comun import COWORK, GASTOS, INFORME_PDF, MATERIALES, MERCADO, SEMANA, SKILL, carpeta, html_a_pdf  # noqa: E402
 from materiales_texto import TEXTOS  # noqa: E402
 
 import docx  # noqa: E402
@@ -28,8 +29,8 @@ from openpyxl.utils import get_column_letter  # noqa: E402
 CONTROL = {}
 
 
-def ruta(n, nombre):
-    p = MATERIALES / carpeta(n) / nombre
+def ruta(practica, nombre):
+    p = MATERIALES / carpeta(practica) / nombre
     p.parent.mkdir(parents=True, exist_ok=True)
     return p
 
@@ -54,11 +55,11 @@ def hoja(ws, cabecera, filas, anchos):
 
 # ------------------------------------------------------------------ textos
 def textos():
-    for (n, nombre), contenido in TEXTOS.items():
-        ruta(n, nombre).write_text(contenido, encoding="utf-8")
+    for (practica, nombre), contenido in TEXTOS.items():
+        ruta(practica, nombre).write_text(contenido, encoding="utf-8")
 
 
-# ------------------------------------------------------------------ Clase 12
+# ------------------------------------------------------------------ Informe ejecutivo a partir de un PDF
 CSS_INFORME = """
 @page { size: A4; margin: 20mm 20mm 18mm; }
 body { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 10.5pt; line-height: 1.5; color: #222; }
@@ -114,7 +115,7 @@ def informe_arrabal():
     b2b26 = 4_820_000 - sum(b for _, _, b in tiendas) - online[1]
     tot26 = sum(b for _, _, b in tiendas) + online[1] + b2b26
     assert tot26 == 4_820_000
-    CONTROL["Clase 12 · ventas 2026"] = f"{eur(tot26)} ({(tot26 - tot25) / tot25 * 100:+.1f} % frente a {eur(tot25)})"
+    CONTROL["Informe PDF · ventas 2026"] = f"{eur(tot26)} ({(tot26 - tot25) / tot25 * 100:+.1f} % frente a {eur(tot25)})"
     img = grafico_mermas()
     html = f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Informe anual 2026 · Panes Arrabal</title>
 <style>{CSS_INFORME}</style></head><body>
@@ -156,10 +157,10 @@ def informe_arrabal():
 <li><b>Aplicación de pedidos:</b> queremos lanzar en el segundo trimestre una aplicación propia para los pedidos con recogida.</li>
 <li><b>Canal B2B:</b> recuperar volumen tras la pérdida de Café Volta, con el objetivo de llegar a 28 clientes activos.</li></ul>
 </section></body></html>"""
-    html_a_pdf(html, ruta(12, "informe_anual_2026_panes_arrabal.pdf"))
+    html_a_pdf(html, ruta(INFORME_PDF, "informe_anual_2026_panes_arrabal.pdf"))
 
 
-# ------------------------------------------------------------------ Clase 14
+# ------------------------------------------------------------------ Analiza una hoja de gastos
 def gastos_lumbre():
     rnd = random.Random(14)
     filas = []
@@ -220,13 +221,13 @@ def gastos_lumbre():
     filas.insert(dup + 1, list(filas[dup]))
     total_hoja = round(sum(r[4] for r in filas), 2)
     total_banco = round(total_hoja - filas[dup][4], 2)
-    CONTROL["Clase 14 · filas de la hoja"] = len(filas)
-    CONTROL["Clase 14 · total de la hoja"] = eur(total_hoja)
-    CONTROL["Clase 14 · total del extracto (sin el duplicado)"] = eur(total_banco)
+    CONTROL["Gastos · filas de la hoja"] = len(filas)
+    CONTROL["Gastos · total de la hoja"] = eur(total_hoja)
+    CONTROL["Gastos · total del extracto (sin el duplicado)"] = eur(total_banco)
     por_mes = {m: round(sum(r[4] for r in filas if r[0].month == m and r[3] in ("Desplazamientos", "Viajes")), 2) for m in (7, 8, 9)}
-    CONTROL["Clase 14 · desplazamientos + viajes por mes"] = {m: eur(v) for m, v in por_mes.items()}
+    CONTROL["Gastos · desplazamientos + viajes por mes"] = {m: eur(v) for m, v in por_mes.items()}
     sw = {m: round(sum(r[4] for r in filas if r[0].month == m and r[3] == "Software y suscripciones"), 2) for m in (7, 8, 9)}
-    CONTROL["Clase 14 · software por mes (con duplicado)"] = {m: eur(v) for m, v in sw.items()}
+    CONTROL["Gastos · software por mes (con duplicado)"] = {m: eur(v) for m, v in sw.items()}
 
     wb = Workbook()
     ws = wb.active
@@ -235,8 +236,8 @@ def gastos_lumbre():
     for r in ws.iter_rows(min_row=2):
         r[0].number_format = "DD/MM/YYYY"
         r[4].number_format = '#,##0.00'
-    wb.save(ruta(14, "gastos_T3_2026_estudio_lumbre.xlsx"))
-    return CONTROL["Clase 14 · total del extracto (sin el duplicado)"]
+    wb.save(ruta(GASTOS, "gastos_T3_2026_estudio_lumbre.xlsx"))
+    return CONTROL["Gastos · total del extracto (sin el duplicado)"]
 
 
 def ticket_restaurante():
@@ -266,10 +267,10 @@ def ticket_restaurante():
         y += 42 if fo is fb else 36
     img = img.rotate(-2.5, expand=True, fillcolor="#d9d4ca")
     assert abs(49.50 + 18.00 + 4.40 + 5.40 + 9.10 - 86.40) < 0.001
-    img.save(ruta(14, "ticket_comida_cliente.jpg"), quality=88)
+    img.save(ruta(GASTOS, "ticket_comida_cliente.jpg"), quality=88)
 
 
-# ------------------------------------------------------------------ Clase 18
+# ------------------------------------------------------------------ Informe de mercado con fuentes verificadas
 def plantilla_verificacion():
     wb = Workbook()
     ws = wb.active
@@ -286,10 +287,10 @@ def plantilla_verificacion():
               "5. Anota el veredicto y lleva las correcciones a Claude."]:
         ws2.append([t])
     ws2.column_dimensions["A"].width = 90
-    wb.save(ruta(18, "plantilla_verificacion_fuentes.xlsx"))
+    wb.save(ruta(MERCADO, "plantilla_verificacion_fuentes.xlsx"))
 
 
-# ------------------------------------------------------------------ Clase 26
+# ------------------------------------------------------------------ Prepara tu semana con tu correo y tu calendario
 def agenda_bruma():
     ev = [
         ("20261116T093000", "20261116T100000", "Reunión de equipo semanal", "Oficina"),
@@ -311,10 +312,10 @@ def agenda_bruma():
                 f"DTSTART;TZID=Europe/Madrid:{a}", f"DTEND;TZID=Europe/Madrid:{b}", f"SUMMARY:{s}",
                 f"LOCATION:{loc}", "END:VEVENT"]
     out.append("END:VCALENDAR")
-    ruta(26, "agenda_semana_bruma.ics").write_text("\r\n".join(out) + "\r\n", encoding="utf-8")
+    ruta(SEMANA, "agenda_semana_bruma.ics").write_text("\r\n".join(out) + "\r\n", encoding="utf-8")
 
 
-# ------------------------------------------------------------------ Clase 30
+# ------------------------------------------------------------------ Crea tu primera skill
 CANALES = ["Tienda Centro", "Tienda Playa", "Online"]
 CATEGORIAS = {"Bicicletas": (480, 1450), "Accesorios": (12, 85), "Taller": (25, 90), "Alquiler": (15, 45)}
 
@@ -365,7 +366,7 @@ def _ventas(semilla):
 def _informe_rueda_libre(filas, tot):
     lunes = (44, 45, 46, 47)
     for s in (45, 46, 47):
-        CONTROL[f"Clase 30 · semana {s}"] = {c: f"{eur(tot[(s, c)])} ({(tot[(s, c)] - tot[(s - 1, c)]) / tot[(s - 1, c)] * 100:+.1f} %)" for c in CANALES}
+        CONTROL[f"Skill · semana {s}"] = {c: f"{eur(tot[(s, c)])} ({(tot[(s, c)] - tot[(s - 1, c)]) / tot[(s - 1, c)] * 100:+.1f} %)" for c in CANALES}
     wb = Workbook()
     ws = wb.active
     ws.title = "Ventas"
@@ -373,7 +374,7 @@ def _informe_rueda_libre(filas, tot):
     for r in ws.iter_rows(min_row=2):
         r[1].number_format = "DD/MM/YYYY"
         r[5].number_format = '#,##0.00'
-    wb.save(ruta(30, "ventas_rueda_libre_semanas_44-47.xlsx"))
+    wb.save(ruta(SKILL, "ventas_rueda_libre_semanas_44-47.xlsx"))
 
     # Informe de ejemplo de la semana 45, con cifras reales de la hoja
     t45 = sum(tot[(45, c)] for c in CANALES)
@@ -407,10 +408,10 @@ def _informe_rueda_libre(filas, tot):
     d.add_paragraph("Sin alertas esta semana: ningún canal cae más de un 15 % respecto a la semana anterior.")
     d.add_heading("Para la próxima semana", level=2)
     d.add_paragraph("Revisar el stock de bicicletas eléctricas antes de la campaña de Black Friday.")
-    d.save(ruta(30, "informe_ejemplo_semana_45.docx"))
+    d.save(ruta(SKILL, "informe_ejemplo_semana_45.docx"))
 
 
-# ------------------------------------------------------------------ Clase 32
+# ------------------------------------------------------------------ Delega una tarea completa en Cowork
 EMISOR = "Taller Arcilla · C/ Alfareros 7 · 46001 Valencia · NIF B-46123987"
 FACTURAS = [
     # (archivo, proveedor, nif, número, fecha, [(concepto, cantidad, precio)], iva)
@@ -464,7 +465,7 @@ th:first-child, td:first-child { text-align: left; }
 
 
 def facturas_arcilla():
-    base_dir = MATERIALES / carpeta(32) / "Facturas_proveedores_octubre"
+    base_dir = MATERIALES / carpeta(COWORK) / "Facturas_proveedores_octubre"
     if base_dir.exists():
         shutil.rmtree(base_dir)
     total_general = 0
@@ -491,9 +492,9 @@ def facturas_arcilla():
 <p>Este documento es un presupuesto y no tiene validez como factura. IVA no incluido.</p>
 <div class="pie">Documento ficticio para uso formativo.</div></body></html>"""
     html_a_pdf(pres, base_dir / "doc20261012.pdf")
-    CONTROL["Clase 32 · facturas distintas"] = len(FACTURAS)
-    CONTROL["Clase 32 · archivos en la carpeta"] = sum(len(f[0]) for f in FACTURAS) + 1
-    CONTROL["Clase 32 · total de las facturas (sin duplicado)"] = eur(total_general)
+    CONTROL["Cowork · facturas distintas"] = len(FACTURAS)
+    CONTROL["Cowork · archivos en la carpeta"] = sum(len(f[0]) for f in FACTURAS) + 1
+    CONTROL["Cowork · total de las facturas (sin duplicado)"] = eur(total_general)
 
 
 def main():

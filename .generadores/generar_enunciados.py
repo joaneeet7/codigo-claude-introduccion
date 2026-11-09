@@ -1,10 +1,10 @@
 """Genera un PDF de enunciado por clase práctica en '1-Enunciados/'.
 
-Uso: python3 -I .generadores/generar_enunciados.py   (macOS, usa Google Chrome headless)
+Uso: python3 -I .generadores/generar_enunciados.py [gastos skill ...]   (macOS, usa Google Chrome headless)
 Misma maqueta que el curso Claude Associate Foundations: diapositivas 16:9
 (portada, presentación del caso y una diapositiva por paso). Cada diapositiva
 se reduce sola si su contenido no cabe; el script avisa si baja del 85 %.
-La Clase 05 (crear la cuenta) no tiene enunciado.
+La práctica de crear la cuenta no tiene enunciado.
 """
 import html
 import re
@@ -15,7 +15,8 @@ import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from comun import CHROME, CLASES, ENUNCIADOS  # noqa: E402
+from comun import (APP, CHECKLIST, CHROME, CONVERSACIONES, COWORK, ENUNCIADOS, GASTOS, GUIA,
+                   INFORME_PDF, MERCADO, MODELOS, PETICION, PROPUESTA, PROYECTO, SECCION, SEMANA, SKILL, WEBS)  # noqa: E402
 
 
 class Bloque(str):
@@ -49,7 +50,7 @@ CV_HTML = (f'<div class="cvs">{_cv("A", "Lucía Fernández")}<div class="eq"><b>
 # Cada paso: (título, concepto, qué haces, [prompts, Bloque o Html], [lista opcional]).
 EJERCICIOS = [
   {
-    "n": 7,
+    "practica": PETICION,
     "titulo": "Una clienta molesta y un correo que hay que acertar",
     "caso": "Una tienda online de cosmética recibe la queja de una clienta fiel. Se pasa de una petición de una línea a un correo listo para enviar.",
     "archivos": "queja_clienta.txt y correo_ejemplo_marca.txt",
@@ -79,7 +80,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 9,
+    "practica": MODELOS,
     "titulo": "Un consultor y su cliente recurrente",
     "caso": "Un consultor trabaja cada semana para una cadena de cafeterías. Qué modelo elegir para cada tarea: una sencilla que se repite y una decisión con varios factores.",
     "archivos": "titulares_prensa.txt, datos_expansion.txt y brief_cafes_brio.txt",
@@ -98,7 +99,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 12,
+    "practica": INFORME_PDF,
     "titulo": "El informe anual de un obrador de pan",
     "caso": "Un informe de 7 páginas con una trampa: el texto dice que las mermas están bajo control y el gráfico dice lo contrario. Y hay un dato que no aparece.",
     "archivos": "informe_anual_2026_panes_arrabal.pdf",
@@ -126,7 +127,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 14,
+    "practica": GASTOS,
     "titulo": "Los gastos del trimestre de un estudio de arquitectura",
     "caso": "Una hoja con 75 gastos del tercer trimestre. Tiene un cargo duplicado, categorías mal escritas y una devolución. Además, falta un ticket que solo está en una foto.",
     "archivos": "gastos_T3_2026_estudio_lumbre.xlsx y ticket_comida_cliente.jpg",
@@ -157,7 +158,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 16,
+    "practica": GUIA,
     "titulo": "La guía de bienvenida de una cadena de tiendas",
     "caso": "Unas notas desordenadas para las nuevas incorporaciones de Ludo, tres tiendas de juegos de mesa, se convierten en una guía visual. Entre las notas hay datos que nunca deberían compartirse.",
     "archivos": "notas_bienvenida_ludo.txt",
@@ -184,7 +185,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 18,
+    "practica": MERCADO,
     "titulo": "¿Abrimos un coworking en Málaga?",
     "caso": "Una socia tiene que decidir si invierte en un espacio de coworking. Se pasa de una búsqueda rápida a una investigación a fondo y se comprueban las fuentes una a una.",
     "archivos": "plantilla_verificacion_fuentes.xlsx",
@@ -215,7 +216,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 20,
+    "practica": PROPUESTA,
     "titulo": "Renovar el contrato con un cliente que quiere recortar",
     "caso": "Una agencia de diseño web tiene que renovar el contrato de mantenimiento de una cadena hotelera con un nuevo director financiero que pide recortar un 10 %.",
     "archivos": "datos_renovacion_mar_blau.txt",
@@ -241,7 +242,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 22,
+    "practica": CONVERSACIONES,
     "titulo": "Decirle a alguien que no ha conseguido el puesto",
     "caso": "La responsable de un equipo de atención al cliente tiene que contar a una agente sénior que la plaza de coordinación ha sido para otra persona. Se prepara, se ensaya y se escribe el correo de seguimiento.",
     "archivos": "contexto_conversacion.txt y mis_correos_ejemplo.txt",
@@ -270,7 +271,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 24,
+    "practica": PROYECTO,
     "titulo": "El asistente de RR. HH. que se estropea",
     "caso": "Un Project de RR. HH. que funciona bien hasta que alguien sube una versión antigua de la política.",
     "archivos": "Politica_vacaciones (1).docx, Politica_vacaciones.docx, Politica_vacaciones_v3_vigente.docx y Manual_empleado.docx",
@@ -298,7 +299,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 26,
+    "practica": SEMANA,
     "titulo": "Una semana de trabajo en una agencia de eventos",
     "caso": "Claude conectado al correo y al calendario prepara la semana: reuniones, solapamientos, correos urgentes y borradores. Uno de los correos esconde una instrucción.",
     "archivos": "agenda_semana_bruma.ics y correos_demo_bruma.txt (para montar una cuenta de pruebas)",
@@ -327,7 +328,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 28,
+    "practica": WEBS,
     "titulo": "Elegir herramienta de gestión de proyectos",
     "caso": "Un equipo de 8 personas compara tres herramientas en sus webs oficiales. Claude navega, recoge los datos y deja la decisión preparada.",
     "archivos": "criterios_comparativa.txt",
@@ -357,7 +358,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 30,
+    "practica": SKILL,
     "titulo": "El informe de ventas de los lunes",
     "caso": "Cada lunes, una tienda de bicicletas prepara el mismo informe para dirección. Se convierte en una skill que Claude usa sola cuando aparece la tarea.",
     "archivos": "ventas_rueda_libre_semanas_44-47.xlsx e informe_ejemplo_semana_45.docx",
@@ -386,7 +387,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 32,
+    "practica": COWORK,
     "titulo": "Una carpeta de facturas que nadie ha ordenado",
     "caso": "Las facturas de octubre de un taller de cerámica llegan con nombres sin sentido. Hay una duplicada y un documento que no es una factura. Cowork las ordena y prepara el resumen.",
     "archivos": "Facturas_proveedores_octubre/ (18 archivos PDF)",
@@ -418,7 +419,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 34,
+    "practica": APP,
     "titulo": "Etiquetas de precio para una tienda de ultramarinos",
     "caso": "Cada semana, una tienda pasa su lista de productos a etiquetas de precio a mano. Claude Code construye una pequeña aplicación que lo hace con un clic.",
     "archivos": "productos_despensa.csv",
@@ -447,7 +448,7 @@ EJERCICIOS = [
     ],
   },
   {
-    "n": 37,
+    "practica": CHECKLIST,
     "titulo": "Seis situaciones y una lista para tu equipo",
     "caso": "Se revisan los ajustes de privacidad, se anonimiza un correo, se pone a prueba la complacencia y el sesgo de Claude y, al final, se construye una lista de comprobación de uso responsable.",
     "archivos": "situaciones_uso_responsable.txt, correo_con_datos_personales.txt, plan_tienda_velas.txt, CV_A_Lucia_Fernandez.docx y CV_B_Michael_Johnson.docx",
@@ -579,7 +580,7 @@ def slide(cls, inner, n):
 
 
 def build(x):
-    dominio = CLASES[x["n"]]
+    dominio = x["practica"]
     cover = ('<div class="top">Ejercicio práctico con Claude</div><div class="main"><div class="bar"></div>'
              f'<h1 class="sec">{e(dominio)}</h1><div class="sub">{e(x["titulo"])}</div></div>')
     out = [f'<div class="s cover">{cover}<div class="foot"><span>{FOOT}</span><span></span></div></div>']
@@ -639,11 +640,12 @@ def render(doc, out):
 
 
 def main():
-    solo = {int(a) for a in sys.argv[1:]}
+    # Argumentos opcionales: trozos del nombre de las prácticas a generar («gastos», «skill»…).
+    filtros = [a.lower() for a in sys.argv[1:]]
     for x in EJERCICIOS:
-        if solo and x["n"] not in solo:
+        if filtros and not any(f in x["practica"].lower() for f in filtros):
             continue
-        render(build(x), ENUNCIADOS / f"Enunciado - Clase {x['n']:02d} - {CLASES[x['n']]}.pdf")
+        render(build(x), ENUNCIADOS / SECCION[x["practica"]] / f"Enunciado - {x['practica']}.pdf")
 
 
 if __name__ == "__main__":

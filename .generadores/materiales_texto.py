@@ -1,8 +1,9 @@
-"""Materiales en texto plano de las clases prácticas. Todos los datos son ficticios."""
+"""Materiales en texto plano de las prácticas. Todos los datos son ficticios."""
+from comun import APP, CHECKLIST, CONVERSACIONES, GUIA, PETICION, PROPUESTA, SEMANA, WEBS
 
 TEXTOS = {
-# ---------------------------------------------------------------- Clase 07
-(7, "queja_clienta.txt"): """CORREO DE LA CLIENTA
+# ---------------------------------------------------------------- De una petición vaga a un resultado profesional
+(PETICION, "queja_clienta.txt"): """CORREO DE LA CLIENTA
 De: Nuria Castell
 Asunto: Pedido LUA-48213: tarde y roto
 
@@ -28,7 +29,7 @@ NOTAS INTERNAS (no se envían a la clienta)
 - No prometas una fecha de entrega exacta: depende del transportista.
 """,
 
-(7, "correo_ejemplo_marca.txt"): """EJEMPLO DE RESPUESTA DEL EQUIPO DE LÚA
+(PETICION, "correo_ejemplo_marca.txt"): """EJEMPLO DE RESPUESTA DEL EQUIPO DE LÚA
 (Así respondemos normalmente. Úsalo como referencia de tono y estructura, no para copiar frases.)
 
 Asunto: Tu pedido LUA-47102
@@ -51,8 +52,8 @@ Carla, del equipo de Lúa
 P. D.: Gracias por avisarnos con tanto detalle. Nos ayuda a mejorar.
 """,
 
-# ---------------------------------------------------------------- Clase 16
-(16, "notas_bienvenida_ludo.txt"): """notas para la guía de bienvenida (lo voy apuntando según me acuerdo)
+# ---------------------------------------------------------------- Crea una guía visual para tu equipo
+(GUIA, "notas_bienvenida_ludo.txt"): """notas para la guía de bienvenida (lo voy apuntando según me acuerdo)
 
 - somos Ludo, tiendas de juegos de mesa. 3 tiendas: Ludo Centro (c/ Hileras 14), Ludo Chamberí (c/ Trafalgar 22) y Ludo Retiro (c/ Ibiza 9)
 - horario de tiendas lunes a sábado 10:30-14:00 y 17:00-21:00, domingos cerrado. en diciembre abrimos domingos por la tarde
@@ -73,8 +74,8 @@ P. D.: Gracias por avisarnos con tanto detalle. Nos ayuda a mejorar.
 - importante: explicar los juegos, no venderlos. si no conoces un juego, se dice y se busca a alguien que lo conozca
 """,
 
-# ---------------------------------------------------------------- Clase 20
-(20, "datos_renovacion_mar_blau.txt"): """DATOS PARA LA PROPUESTA DE RENOVACIÓN
+# ---------------------------------------------------------------- Redacta una propuesta profesional con Claude
+(PROPUESTA, "datos_renovacion_mar_blau.txt"): """DATOS PARA LA PROPUESTA DE RENOVACIÓN
 (Úsalos para responder a las preguntas de Claude. No hace falta pegarlos de golpe.)
 
 QUIÉN SOY
@@ -106,8 +107,8 @@ LO QUE SÉ DE LA COMPETENCIA
 - Otra agencia les ha ofrecido 590 € al mes, sin soporte de fin de semana y sin experiencia en motores de reservas.
 """,
 
-# ---------------------------------------------------------------- Clase 22
-(22, "contexto_conversacion.txt"): """CONTEXTO DE LA CONVERSACIÓN DIFÍCIL
+# ---------------------------------------------------------------- Ensaya conversaciones difíciles
+(CONVERSACIONES, "contexto_conversacion.txt"): """CONTEXTO DE LA CONVERSACIÓN DIFÍCIL
 
 TU PAPEL
 - Diriges el equipo de atención al cliente de Nubo, una empresa de software de facturación. El equipo tiene 9 personas.
@@ -135,7 +136,7 @@ LO QUE TE PREOCUPA
 - Que se entere por otra persona antes de que hables con ella.
 """,
 
-(22, "mis_correos_ejemplo.txt"): """TRES CORREOS QUE HE ESCRITO YO
+(CONVERSACIONES, "mis_correos_ejemplo.txt"): """TRES CORREOS QUE HE ESCRITO YO
 (Para que Claude aprenda cómo escribo.)
 
 --- Correo 1 ---
@@ -171,8 +172,8 @@ Hasta el lunes,
 Ana
 """,
 
-# ---------------------------------------------------------------- Clase 26
-(26, "correos_demo_bruma.txt"): """CORREOS DE PRUEBA · BRUMA EVENTOS
+# ---------------------------------------------------------------- Prepara tu semana con tu correo y tu calendario
+(SEMANA, "correos_demo_bruma.txt"): """CORREOS DE PRUEBA · BRUMA EVENTOS
 Si no quieres usar tu correo real, crea una cuenta de Gmail de pruebas, envíale estos correos desde otra cuenta e importa agenda_semana_bruma.ics en su Google Calendar.
 Todos los nombres, empresas y direcciones son ficticios.
 
@@ -258,8 +259,8 @@ Gracias,
 Nerea
 """,
 
-# ---------------------------------------------------------------- Clase 28
-(28, "criterios_comparativa.txt"): """CRITERIOS PARA LA COMPARATIVA
+# ---------------------------------------------------------------- Compara opciones en varias webs
+(WEBS, "criterios_comparativa.txt"): """CRITERIOS PARA LA COMPARATIVA
 (Lo que necesita el equipo antes de elegir herramienta de gestión de proyectos.)
 
 - Equipo de 8 personas.
@@ -276,8 +277,8 @@ Para cada herramienta queremos saber:
 - La dirección de la página de donde sale cada dato.
 """,
 
-# ---------------------------------------------------------------- Clase 34
-(34, "productos_despensa.csv"): """nombre;formato;precio;precio_oferta;origen
+# ---------------------------------------------------------------- Construye tu primera aplicación con Claude Code
+(APP, "productos_despensa.csv"): """nombre;formato;precio;precio_oferta;origen
 Aceite de oliva virgen extra Picual;botella 750 ml;9,85;;Jaén
 Arroz bomba;paquete 1 kg;4,20;;Valencia
 Lentejas pardinas;paquete 500 g;2,15;;Tierra de Campos
@@ -310,8 +311,8 @@ Cerveza artesana tostada;botella 330 ml;2,75;;Madrid
 Agua mineral;botella 1,5 l;0,85;;Lanjarón
 """,
 
-# ---------------------------------------------------------------- Clase 37
-(37, "situaciones_uso_responsable.txt"): """SEIS SITUACIONES PARA REVISAR
+# ---------------------------------------------------------------- Tu checklist de uso responsable
+(CHECKLIST, "situaciones_uso_responsable.txt"): """SEIS SITUACIONES PARA REVISAR
 Para cada una: ¿qué harías?, ¿qué riesgo hay? y ¿cómo lo harías bien?
 
 1. Para segmentar una campaña, quieres pegar en Claude el listado completo de clientes con nombre, correo y teléfono.
@@ -327,7 +328,7 @@ Para cada una: ¿qué harías?, ¿qué riesgo hay? y ¿cómo lo harías bien?
 6. Has subido el informe médico de un familiar y Claude te ha explicado las opciones de tratamiento. Quieres decidir cuál elegir con esa explicación.
 """,
 
-(37, "correo_con_datos_personales.txt"): """CORREO RECIBIDO (contiene datos personales: anonimízalo antes de pegarlo en Claude)
+(CHECKLIST, "correo_con_datos_personales.txt"): """CORREO RECIBIDO (contiene datos personales: anonimízalo antes de pegarlo en Claude)
 
 De: Javier Morales Ruiz <javier.morales.r@correo.example>
 Asunto: Cobro duplicado en mi cuota
@@ -344,7 +345,7 @@ Gracias,
 Javier
 """,
 
-(37, "plan_tienda_velas.txt"): """MI PLAN: TIENDA DE VELAS ARTESANAS
+(CHECKLIST, "plan_tienda_velas.txt"): """MI PLAN: TIENDA DE VELAS ARTESANAS
 
 - Voy a dejar mi trabajo en enero para abrir una tienda de velas aromáticas artesanas en mi barrio.
 - Inversión inicial: 25.000 € (ahorros y un préstamo de 15.000 €).
