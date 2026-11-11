@@ -12,7 +12,6 @@ Cada carpeta se organiza por sección del curso y, dentro, por práctica:
 
 - `0-Materiales/<Sección>/<Práctica>/`: archivos que usarás en la práctica.
 - `1-Enunciados/<Sección>/Enunciado - <Práctica>.pdf`: los pasos y prompts de cada práctica.
-- `2-Resultados/<Sección>/<Práctica>/`: lo que devolvió Claude en la grabación, para comparar.
 
 ## Cómo usar este repositorio
 
